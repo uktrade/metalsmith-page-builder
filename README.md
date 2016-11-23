@@ -1,5 +1,5 @@
 # metalsmith-page-builder
-Metalsmith plugin to build static website driven by iigb website structure files.
+Metalsmith plugin to build static website driven by json structure files.
 
 ## Table of contents
 
