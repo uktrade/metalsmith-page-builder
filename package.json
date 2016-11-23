@@ -1,0 +1,28 @@
+{
+  "name": "metalsmith-page-builder",
+  "version": "1.0.0",
+  "description": "Metalsmith plugin to build static website driven by json structure files.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uktrade/metalsmith-page-builder.git"
+  },
+  "keywords": [
+    "metalsmith",
+    "structure",
+    "build",
+    "static"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uktrade/metalsmith-page-builder/issues"
+  },
+  "homepage": "https://github.com/uktrade/metalsmith-page-builder#readme",
+  "dependencies": {
+    "js-yaml": "^3.7.0",
+    "metalsmith": "^2.3.0",
+    "metalsmith-json": "^0.1.2"
+  }
+}
