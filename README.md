@@ -8,13 +8,13 @@ Metalsmith plugin to build static website driven by json structure files.
 
 ## Purpose
 
-Page builder provides way to render existing layouts (html) using markdown content with front-matter.This in turn allows existing content to be **re-usable** with multiple layouts to create static web pages.
+Page builder is an alternative approach to Metalsmith's way of rendering markdown content using layouts. Page builder decouples markdown content and layout to allow content to be **re-usable** to form a base for a content centric flat html cms system. 
 
-Intended to be used with IIGB cms system that generates structure files that is processable with metalsmith-structure-parser as shown below.
+Intended to be used with IIGB cms system that generates structure files that is processable with page builder as shown below.
 
-## Structure file
+## Usage example
 
-Structure file are plain json files defining page hierarchy. 
+Structure files are plain json files defining page hierarchy. 
 
 Example scenario below uses nunjucks template engine with Metalsmith layouts plugin to build a static website.
 
@@ -24,6 +24,7 @@ Example scenario below uses nunjucks template engine with Metalsmith layouts plu
   content/
     abot_us.md
     intro.md
+    labels.md
   templates/
     base/
       index.html
@@ -36,46 +37,42 @@ Example scenario below uses nunjucks template engine with Metalsmith layouts plu
   build/
 ```
 
-To create the homepage as `home/index.html` under build folder using layout `home.html` with contents `intro.md` and `about_us.md` and an about us page as `home/about_us/index.html` structure file should look like as follows:
+Structure file should look like below to create a homepage as `home/index.html` under build folder using layout `home.html` with contents `intro.md` and `about_us.md` and an about us page as `home/about_us/index.html`
 
+
+**structure.json**
 ```
-structure.json
----------------
-
 {
-  "globalMeta": {
+  "globalData": {
     "locale": {
       "language": "en",
-      "country": "uk"
+      "country": "uk",
+    },
+    "labels": {
+      "content": "labels.md"
     }
   },
   "pages": [{
     "path": "home",
     "output": "index.html",
     "layout": "home.html",
-    "meta": {
-      "pageTitle": "Home"
-    },
-    "contentBlocks": {
+    "data": {
+      "pageTitle": "Home",
       "intro": {
-        "file": "intro.md",
-        "meta": {
-          "link": "/about_us"
-        }
+        "content": "intro.md"
       },
       "aboutUs":{
-        "file":"about_us.md"
+        "content":"about_us.md",
+        "link": "/about_us"
       }
     },
     "children" : [{
       "path": "about_us",
       "layout": "about_us.html",
-      "meta": {
-        "pageTitle": "About US"
-      },
-      "contentBlocks": {
+      "data": {
+        "pageTitle": "About US",
         "aboutUS": {
-          "file": "about_us.md"
+          "content": "about_us.md"
         }
       }
       }]
@@ -83,8 +80,75 @@ structure.json
 }
 ```
 
-* Page entries are defined using `pages`.
-* `output` is optional. index.html is default output file name if not given for all page entries.
-* Use `children` to create a nested folder structure
-* Meta data can be added to each page entry and content block using `meta` key.
-* Meta data added using `globalMeta` is accessible for all page entries
+
+**intro.md**
+```
+---
+title: Hello
+name: World
+---
+
+Lorem ipsum...
+
+```
+
+**about_us.md**
+```
+---
+summary: Lorem ipsum...
+---
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod....
+```
+
+**index.html**
+```
+<!DOCTYPE html>
+<!-- Using global data definition locale -->
+<html lang="{{locale.language}}"> 
+<head>
+  <meta charset="UTF-8">
+  <!-- Using page title defined in page meta data -->
+  <title>{{pageTitle}}</title>
+</head>
+<body>
+  {% block content %}
+
+  {% endblock %}
+</body>
+</html>
+
+```
+
+
+**home.html**
+```
+{% extends "base/index.html" %}
+
+{% block content %}
+
+  {% include "partials/nav.html" %}
+  
+  <!-- Using named content block intro -->
+  {{intro.content.title }} {{ intro.content.name}}
+  {{intro.content.contents | safe}}
+
+  <!-- Using named content block aboutUs -->
+  {{aboutUs.content.summary}}
+  <a href="{{aboutUs.link}}"> See more </a>
+
+{% endblock %}
+
+```
+
+
+**about_us.html**
+```
+{% extends "base/index.html" %}
+
+{% block content %}
+
+  <!-- Using named content aboutUs -->
+  {{aboutUs.content.contents | safe}}
+  
+```
