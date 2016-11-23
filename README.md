@@ -1,2 +1,4 @@
-# website-builder
-Website build to build static site with layout, structure and content
+# metalsmith-structure-builder
+Metalsmith plugin to build static website driven by iigb website structure files.
+
+
