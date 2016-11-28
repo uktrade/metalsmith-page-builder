@@ -1,0 +1,37 @@
+{
+  "globalData": {
+    "locale": {
+      "language": "en",
+      "country": "us",
+      "countryName": "United States"
+    }
+  },
+  "pages": [{
+    "path": "404",
+    "layout": "404.html",
+    "data": {
+      "pageTitle": "Error - Page not found!",
+      "backgroudImage": "media/404.jpg"
+    }
+  }, {
+    "path": "us",
+    "layout": "home.html",
+    "data": {
+      "pageTitle": "Home",
+      "intro": {
+        "content": "intro.md",
+        "link": "/about_us"
+      }
+    },
+    "children": [{
+      "path": "about_us",
+      "layout": "about-us.html",
+      "data": {
+        "pageTitle": "Abou US",
+        "aboutUS": {
+          "content": "about-us.md"
+        }
+      }
+    }]
+  }]
+}
