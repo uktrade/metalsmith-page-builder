@@ -20,7 +20,7 @@
       "pageTitle": "Home",
       "intro": {
         "content": "intro.md",
-        "link": "/about_us"
+        "link": "/us/about_us"
       }
     },
     "children": [{
