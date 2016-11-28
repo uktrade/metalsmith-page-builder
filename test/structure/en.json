@@ -4,6 +4,10 @@
       "language": "en",
       "country": "us",
       "countryName": "United States"
+    },
+    "intro": {
+      "content": "intro.md",
+      "hoist": true
     }
   },
   "pages": [{

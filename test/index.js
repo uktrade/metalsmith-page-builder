@@ -15,8 +15,6 @@ var debug = logger.debug;
 build();
 
 function build() {
-  debug('%j', process);
-
   var m = metalsmith(process.cwd())
     .source('content')
     .use(markdown())
