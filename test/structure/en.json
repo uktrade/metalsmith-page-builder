@@ -7,7 +7,7 @@
     }
   },
   "pages": [{
-    "path": "404",
+    "output": "404.html",
     "layout": "404.html",
     "data": {
       "pageTitle": "Error - Page not found!",
