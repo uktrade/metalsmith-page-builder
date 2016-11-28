@@ -1,6 +1,6 @@
 {
   "name": "metalsmith-page-builder",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Metalsmith plugin to build static website driven by json structure files.",
   "main": "index.js",
   "scripts": {},
