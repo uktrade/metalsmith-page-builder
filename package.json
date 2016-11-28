@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/uktrade/metalsmith-page-builder#readme",
   "dependencies": {
+    "colors": "^1.1.2",
     "debug": "^2.3.3",
     "metalsmith": "^2.3.0",
     "metalsmith-json": "^0.1.2"
