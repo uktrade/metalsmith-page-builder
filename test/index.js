@@ -9,7 +9,7 @@ var metalsmith = require('metalsmith'),
 
 var logger = require('../lib/helpers/logger')('test');
 var debug = logger.debug;
-// var warn = logger.warn;
+var error = logger.error;
 
 
 build();
@@ -28,7 +28,8 @@ function build() {
     .destination('./build')
     .build(function(err) {
       if (err) {
-        throw (err);
+        error(err);
+        process.exit(1);
       } else {
         debug('Build finished successfully!');
       }
