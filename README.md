@@ -4,7 +4,8 @@ Metalsmith plugin to build static website driven by json structure files.
 ## Table of contents
 
 * [Purpose](#purpose)
-* [Structure file](#structure-file)
+* [Structure](#structure)
+* [Example](#example)
 
 ## Purpose
 
@@ -12,7 +13,58 @@ Page builder is an alternative approach to Metalsmith's way of rendering markdow
 
 Intended to be used with IIGB cms system that generates structure files that is processable with page builder as shown below.
 
-## Usage example
+## Structure
+
+* Structure file `data` and `globalData` fields are accessible by template engines. Below example shows mustache style access in template engine context.
+* `content` keyword must be a path to a [metalsmith-makrdown](https://github.com/segmentio/metalsmith-markdown) processable file (e.g. markdown, html with yaml front-matter ). Markdown files are loaded and replaced with markdown path entry.
+* If `"hoist" : true` flag is set, contents of the file are available using property key; rather than  using `{{property.content.someMetaInContentFile}}` you will use  `{{property.someMetaInContentFile}}`. Only effective if file content is loaded.
+* `pages` must be an array of objects defining page properties
+  - `output` key changes the file name generated. If not given `index.html` is used
+  - `children` defines array of sub pages. Each page in children array will be created under path parent-path/child-path/index.html (assuming there is not output property set for file name). 
+
+```
+{
+  "globalData": { //Data that is shared for all page entries
+    "property": "value", // accessible with template engine as {{property}}
+    "anotherProperty": {
+      "someValue": "value" 
+    },
+    "yetAnotherProperty" : {
+      "content": "path/to/content.md" //loaded from content.md file
+    },
+    "oneOtherProperty" : {
+      "content": "another/path/to/content.md",
+      "hoist": true //hoists markdown file content to extend oneOtherProperty
+    }
+  },
+  "pages": [ //Page entries
+    { 
+      "path": "path-of-the-page",
+      "layout": "some.html",//layout to render page with
+      "output": "page.html",//generates path-of-the-page/page.html in build dir
+      "data": { //page context data, accessible by only this page
+        "myData": "testData",//access using {{myData}}
+        "someContent": {
+          "someMetaKey": ["value1", "value2"]
+          "content": "/path/to/file.html",
+          "hoist":true //makes content file meta accessible as {{someContent.metaKey}}
+        }
+      },
+      "children":[ //child page entries.
+        {
+          "path": "child1",
+          .
+          .
+          .
+          
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Example
 
 Structure files are plain json files defining page hierarchy. 
 
