@@ -70,8 +70,6 @@ git branch -d $releaseBranch
 #Atomic ensures nothing is pushed if any of the repos fails to push
 git push --atomic origin $devBranch $masterBranch $version
 
-git push --force origin stable # Update stable tag
-
 #switch back to branch you started
 switch_to $branch
 
